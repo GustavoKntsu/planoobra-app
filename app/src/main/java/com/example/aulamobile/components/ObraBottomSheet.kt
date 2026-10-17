@@ -19,8 +19,13 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditCarBottomSheet(
-    carName: String,
-    onCarNameChange: (String) -> Unit,
+    tituloTela: String,
+    titulo: String,
+    onTituloChange: (String) -> Unit,
+    descricao: String,
+    onDescricaoChange: (String) -> Unit,
+    localizacao: String,
+    onLocalizacaoChange: (String) -> Unit,
     onDismissRequest: () -> Unit,
     onConfirmClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -36,28 +41,52 @@ fun EditCarBottomSheet(
             modifier = Modifier.padding(24.dp)
         ) {
             Text(
-                text = "Edição do Modelo do carro",
+                text = tituloTela,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(16.dp)
             )
             OutlinedTextField(
-                value = carName,
-                onValueChange = onCarNameChange,
-                modifier = Modifier.padding(16.dp),
-                label = { Text("Modelo do carro") },
+                value = titulo,
+                onValueChange = onTituloChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                label = { Text("Nome da obra") },
+                shape = MaterialTheme.shapes.large,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                singleLine = true
+            )
+            OutlinedTextField(
+                value = descricao,
+                onValueChange = onDescricaoChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                label = { Text("Descrição") },
+                shape = MaterialTheme.shapes.large,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+            )
+            OutlinedTextField(
+                value = localizacao,
+                onValueChange = onLocalizacaoChange,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                label = { Text("Localização") },
                 shape = MaterialTheme.shapes.large,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 singleLine = true
             )
             Button(
                 onClick = onConfirmClick,
+                enabled = titulo.isNotBlank(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(24.dp),
                 shape = MaterialTheme.shapes.large
             ) {
                 Text(
-                    text = "Confirm",
+                    text = "Confirmar",
                     modifier = Modifier.padding(8.dp)
                 )
             }
