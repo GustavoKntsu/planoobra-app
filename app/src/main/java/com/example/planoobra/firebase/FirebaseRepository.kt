@@ -6,14 +6,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import com.example.planoobra.models.Obra
 
-data class Obra(
-    val id: String = "",
-    val titulo: String = "",
-    val descricao: String = "",
-    val localizacao: String = "",
-    val status: String = "Em andamento",
-)
 
 object FirebaseRepository {
     private val database =

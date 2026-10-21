@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.planoobra.components.ObraBottomSheet
 import com.example.planoobra.firebase.FirebaseRepository
-import com.example.planoobra.firebase.Obra
+import com.example.planoobra.models.Obra
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
