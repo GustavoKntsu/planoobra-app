@@ -22,5 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "aulaMobile"
+rootProject.name = "PlanoObra"
 include(":app")

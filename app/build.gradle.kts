@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.aulamobile"
+    namespace = "com.example.planoobra"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.aulamobile"
+        applicationId = "com.example.planoobra"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
