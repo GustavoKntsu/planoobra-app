@@ -55,7 +55,7 @@ sealed class ScreenItem(
 ) {
     data object Home : ScreenItem(
         topAppBarItem = TopAppBarItem(
-            title = "Início",
+            title = "Tarefas",
             icons = listOf(
                 Icons.Default.AccountCircle,
                 Icons.Default.MoreVert,

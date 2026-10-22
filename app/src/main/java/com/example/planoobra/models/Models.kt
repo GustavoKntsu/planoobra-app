@@ -26,7 +26,11 @@ data class Tarefa(
     val obraId: String = "",
     val titulo: String = "",
     val descricao: String = "",
-    val status: String = "A fazer" // A fazer, Em andamento, Concluída
+    val responsavelId: String = "",
+    val prazo: String = "",
+    val status: String = "A fazer",
+    val atualizadoEm: Long = 0L,
+    val atualizadoPor: String = ""
 )
 
 // Para o Callebe (Equipe/Ocorrências)
