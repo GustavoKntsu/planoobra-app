@@ -1,5 +1,7 @@
 package com.example.planoobra.models
 
+import java.util.UUID
+
 // Sua data class (já existia, mas agora fica organizada aqui)
 data class Obra(
     val id: String = "",
@@ -43,6 +45,28 @@ data class Ocorrencia(
     val observacao: String = ""
 )
 
+// Participantes da Obra
+data class Participante(
+    val nome: String = "",
+    val funcao: String = "",
+    val id: String = UUID.randomUUID().toString()
+)
+
+// Histórico (Linha do Tempo)
+data class EventoHistorico(
+    val id: String = "",
+    val dataHora: Long = 0L,
+    val acao: String = "",
+    val autor: String = "",
+    val detalhe: String = "",
+    val tipo: String = "Obra"
+)
+
 val statusPedidoMaterial = listOf("Aberto", "Em análise", "Aprovado", "Atendido", "Cancelado")
 val urgenciasPedidoMaterial = listOf("Baixa", "Normal", "Urgente")
 val tiposOcorrencia = listOf("Falta", "Falta justificada", "Atraso", "Saída antecipada", "Acidente", "Outro")
+val funcoesParticipante = listOf(
+    "Engenheiro", "Mestre de Obras", "Pedreiro", "Servente",
+    "Armador", "Carpinteiro", "Eletricista", "Encanador"
+)
+val tiposEventoHistorico = listOf("Obra", "Tarefa", "Material", "Ocorrência", "Equipe")

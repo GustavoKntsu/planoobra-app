@@ -9,6 +9,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.ReportProblem
 import androidx.compose.material.icons.filled.Home
@@ -32,10 +34,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.planoobra.screens.telasscreens.HistoricoScreen
 import com.example.planoobra.screens.telasscreens.HomeScreen
 import com.example.planoobra.screens.telasscreens.MateriaisScreen
 import com.example.planoobra.screens.telasscreens.OcorrenciasScreen
 import com.example.planoobra.screens.telasscreens.PainelObraScreen
+import com.example.planoobra.screens.telasscreens.ParticipantesScreen
 import com.example.planoobra.screens.telasscreens.ProfileScreen
 import com.example.planoobra.ui.theme.PlanoObraTheme
 
@@ -80,6 +84,34 @@ sealed class ScreenItem(
         bottomAppBarItem = BottomAppBarItem(
             icon = Icons.Default.Home,
             label = "Início"
+        )
+    )
+
+    data object Participantes : ScreenItem(
+        topAppBarItem = TopAppBarItem(
+            title = "Participantes da Obra",
+            icons = listOf(
+                Icons.Default.Search,
+                Icons.Default.MoreVert,
+            )
+        ),
+        bottomAppBarItem = BottomAppBarItem(
+            icon = Icons.Default.Groups,
+            label = "Equipe"
+        )
+    )
+
+    data object Historico : ScreenItem(
+        topAppBarItem = TopAppBarItem(
+            title = "Histórico da Obra",
+            icons = listOf(
+                Icons.Default.Search,
+                Icons.Default.MoreVert,
+            )
+        ),
+        bottomAppBarItem = BottomAppBarItem(
+            icon = Icons.Default.History,
+            label = "Histórico"
         )
     )
 
@@ -134,6 +166,8 @@ fun TelasScreen(
         listOf(
             ScreenItem.Painel,
             ScreenItem.Home,
+            ScreenItem.Participantes,
+            ScreenItem.Historico,
             ScreenItem.Materiais,
             ScreenItem.Ocorrencias,
             ScreenItem.Perfil
@@ -183,7 +217,8 @@ fun TelasScreen(
                                 currentScreen = screen
                             },
                             icon = { Icon(icon, contentDescription = null) },
-                            label = { Text(label) }
+                            label = { Text(label) },
+                            alwaysShowLabel = false
                         )
                     }
                 }
@@ -203,6 +238,8 @@ fun TelasScreen(
                 ScreenItem.Materiais -> MateriaisScreen()
                 ScreenItem.Ocorrencias -> OcorrenciasScreen()
                 ScreenItem.Home -> HomeScreen()
+                ScreenItem.Participantes -> ParticipantesScreen()
+                ScreenItem.Historico -> HistoricoScreen()
                 ScreenItem.Perfil -> ProfileScreen(onLogout = onLogout)
             }
 
