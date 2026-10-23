@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 
-    id("com.google.gms.google-services")
+    // id("com.google.gms.google-services")
 }
 
 android {
@@ -54,10 +54,11 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    debugImplementation(libs.androidx.material.icons.exetended) // biblioteca dos icones do material design
+    implementation(libs.androidx.material.icons.exetended) // biblioteca dos icones do material design
     implementation("androidx.navigation:navigation-compose:2.8.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.3")
 
+    /* --- FIREBASE COMENTADO PARA MODO DEMONSTRAÇÃO ---
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:34.11.0"))
 
@@ -71,4 +72,5 @@ dependencies {
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
+    */
 }

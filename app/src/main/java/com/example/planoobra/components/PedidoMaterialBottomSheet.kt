@@ -140,6 +140,16 @@ fun PedidoMaterialBottomSheet(
                 )
             }
 
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                listOf("sacos", "m³", "m²", "kg", "barras", "un").forEach { unSugerida ->
+                    FilterChip(
+                        selected = unidade.equals(unSugerida, ignoreCase = true),
+                        onClick = { unidade = unSugerida },
+                        label = { Text(unSugerida) }
+                    )
+                }
+            }
+
             Text("Urgência", style = MaterialTheme.typography.titleSmall)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 urgenciasPedidoMaterial.forEach { opcao ->

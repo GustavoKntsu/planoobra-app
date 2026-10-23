@@ -33,7 +33,10 @@ fun AppNav(vm: AuthViewModel = viewModel()) {
         composable(Screen.LoginOptions.route) {
             LoginScreen(
                 onEmailClick = { nav.navigate(Screen.SignIn.route) },
-                onGoogleClick = {},
+                onGoogleClick = {
+                    vm.signInDemo()
+                    goToTelas(nav)
+                },
                 onSingUpClick = { nav.navigate(Screen.SignUp.route) }
             )
         }

@@ -33,8 +33,8 @@ fun SignInScreen(
 ) {
     val isSignUp = mode == AuthMode.SignUp
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember(mode) { mutableStateOf(if (isSignUp) "" else "admin@planoobra.com") }
+    var password by remember(mode) { mutableStateOf(if (isSignUp) "" else "123456") }
     var showPassword by remember { mutableStateOf(false) }
     var confirmPassword by remember { mutableStateOf("") }
     var showConfirmPassword by remember { mutableStateOf(false) }
@@ -63,6 +63,22 @@ fun SignInScreen(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.fillMaxWidth()
         )
+
+        if (!isSignUp) {
+            Spacer(Modifier.height(8.dp))
+            Surface(
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                shape = MaterialTheme.shapes.small,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Modo Demonstração: Login fixo preenchido (admin@planoobra.com / 123456)",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
+        }
 
         Spacer(Modifier.height(24.dp))
 

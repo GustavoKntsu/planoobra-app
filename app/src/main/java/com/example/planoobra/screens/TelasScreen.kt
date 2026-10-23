@@ -8,6 +8,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.ReportProblem
 import androidx.compose.material.icons.filled.Home
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.planoobra.screens.telasscreens.HomeScreen
 import com.example.planoobra.screens.telasscreens.MateriaisScreen
 import com.example.planoobra.screens.telasscreens.OcorrenciasScreen
+import com.example.planoobra.screens.telasscreens.PainelObraScreen
 import com.example.planoobra.screens.telasscreens.ProfileScreen
 import com.example.planoobra.ui.theme.PlanoObraTheme
 
@@ -53,9 +55,23 @@ sealed class ScreenItem(
     val bottomAppBarItem: BottomAppBarItem
 
 ) {
+    data object Painel : ScreenItem(
+        topAppBarItem = TopAppBarItem(
+            title = "Painel da Obra (Pendências)",
+            icons = listOf(
+                Icons.Default.AccountCircle,
+                Icons.Default.MoreVert,
+            )
+        ),
+        bottomAppBarItem = BottomAppBarItem(
+            icon = Icons.Default.Dashboard,
+            label = "Painel"
+        )
+    )
+
     data object Home : ScreenItem(
         topAppBarItem = TopAppBarItem(
-            title = "Tarefas",
+            title = "Tarefas e Obras",
             icons = listOf(
                 Icons.Default.AccountCircle,
                 Icons.Default.MoreVert,
@@ -116,6 +132,7 @@ fun TelasScreen(
 ) {
     val screens = remember {
         listOf(
+            ScreenItem.Painel,
             ScreenItem.Home,
             ScreenItem.Materiais,
             ScreenItem.Ocorrencias,
@@ -182,6 +199,7 @@ fun TelasScreen(
         ) { page ->
             val item = screens[page]
             when (item) {
+                ScreenItem.Painel -> PainelObraScreen()
                 ScreenItem.Materiais -> MateriaisScreen()
                 ScreenItem.Ocorrencias -> OcorrenciasScreen()
                 ScreenItem.Home -> HomeScreen()

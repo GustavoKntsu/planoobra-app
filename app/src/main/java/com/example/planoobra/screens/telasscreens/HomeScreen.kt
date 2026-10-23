@@ -45,13 +45,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.planoobra.auth.AuthViewModel
+import com.example.planoobra.auth.DemoUser
 import com.example.planoobra.components.EditCarBottomSheet
 import com.example.planoobra.components.ObraBottomSheet
 import com.example.planoobra.firebase.FirebaseRepository
 import com.example.planoobra.firebase.TarefaRepository
 import com.example.planoobra.models.Obra
 import com.example.planoobra.models.Tarefa
-import com.google.firebase.auth.FirebaseAuth
+// --- FIREBASE COMENTADO PARA MODO DEMONSTRAÇÃO ---
+// import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 private val statusTarefa = listOf("A fazer", "Em andamento", "Concluída")
@@ -75,7 +78,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
     val obras = FirebaseRepository.obras
     val tarefas = TarefaRepository.tarefas
-    val usuarioAtual = FirebaseAuth.getInstance().currentUser
+    val usuarioAtual = AuthViewModel.currentUser ?: DemoUser()
+    // val usuarioAtual = FirebaseAuth.getInstance().currentUser
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val erroCarregamentoObras by FirebaseRepository.erroCarregamento
