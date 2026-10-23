@@ -24,6 +24,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.planoobra.R
+import com.example.planoobra.ui.theme.PlanoObraTheme
+import androidx.compose.ui.tooling.preview.Preview
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,5 +83,13 @@ fun ContactsScreen(modifier: Modifier = Modifier) {
                 Text("Item $it", modifier = Modifier.padding(2.dp))
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ContactsScreenPreview() {
+    PlanoObraTheme {
+        ContactsScreen()
     }
 }

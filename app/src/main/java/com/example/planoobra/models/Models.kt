@@ -42,3 +42,7 @@ data class Ocorrencia(
     val tipo: String = "", // Falta, Atraso, etc.
     val observacao: String = ""
 )
+
+val statusPedidoMaterial = listOf("Aberto", "Em análise", "Aprovado", "Atendido", "Cancelado")
+val urgenciasPedidoMaterial = listOf("Baixa", "Normal", "Urgente")
+val tiposOcorrencia = listOf("Falta", "Falta justificada", "Atraso", "Saída antecipada", "Acidente", "Outro")

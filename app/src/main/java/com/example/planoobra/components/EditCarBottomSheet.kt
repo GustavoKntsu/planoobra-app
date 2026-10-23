@@ -228,7 +228,7 @@ fun EditCarBottomSheet(
     }
 }
 
-private fun isPrazoValido(value: String): Boolean {
+internal fun isPrazoValido(value: String): Boolean {
     val formato = SimpleDateFormat("dd/MM/yyyy", Locale.forLanguageTag("pt-BR")).apply {
         isLenient = false
     }

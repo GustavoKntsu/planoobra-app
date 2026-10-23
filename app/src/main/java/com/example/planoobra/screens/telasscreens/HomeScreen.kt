@@ -447,7 +447,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun MensagemVazia(
+internal fun MensagemVazia(
     texto: String,
     acao: (() -> Unit)? = null,
     textoAcao: String = ""

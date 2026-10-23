@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import com.example.planoobra.R
 import com.example.planoobra.ui.theme.AzulObra
 import com.example.planoobra.ui.theme.LaranjaObra
+import com.example.planoobra.ui.theme.PlanoObraTheme
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SplashScreen(
@@ -85,5 +87,13 @@ fun SplashScreen(
                 Text(text = "Cadastrar", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashScreenPreview() {
+    PlanoObraTheme {
+        SplashScreen()
     }
 }
