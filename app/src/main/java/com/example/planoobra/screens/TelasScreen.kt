@@ -8,8 +8,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Contacts
-import androidx.compose.material.icons.filled.EventBusy
+import androidx.compose.material.icons.filled.Inventory2
+import androidx.compose.material.icons.filled.ReportProblem
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
@@ -31,9 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.planoobra.screens.telasscreens.ContactsScreen
-import com.example.planoobra.screens.telasscreens.EventsScreen
 import com.example.planoobra.screens.telasscreens.HomeScreen
+import com.example.planoobra.screens.telasscreens.MateriaisScreen
+import com.example.planoobra.screens.telasscreens.OcorrenciasScreen
 import com.example.planoobra.screens.telasscreens.ProfileScreen
 import com.example.planoobra.ui.theme.PlanoObraTheme
 
@@ -67,31 +67,31 @@ sealed class ScreenItem(
         )
     )
 
-    data object Events : ScreenItem(
+    data object Materiais : ScreenItem(
         topAppBarItem = TopAppBarItem(
-            title = "Eventos",
+            title = "Pedidos de Material",
             icons = listOf(
                 Icons.Default.Search,
                 Icons.Default.MoreVert,
             )
         ),
         bottomAppBarItem = BottomAppBarItem(
-            icon = Icons.Default.EventBusy,
-            label = "Eventos"
+            icon = Icons.Default.Inventory2,
+            label = "Materiais"
         )
     )
 
-    data object Contacts : ScreenItem(
+    data object Ocorrencias : ScreenItem(
         topAppBarItem = TopAppBarItem(
-            title = "Contatos",
+            title = "Ocorrências e Ausências",
             icons = listOf(
                 Icons.Default.Search,
                 Icons.Default.MoreVert,
             )
         ),
         bottomAppBarItem = BottomAppBarItem(
-            icon = Icons.Default.Contacts,
-            label = "Contatos"
+            icon = Icons.Default.ReportProblem,
+            label = "Ocorrências"
         )
     )
 
@@ -117,8 +117,8 @@ fun TelasScreen(
     val screens = remember {
         listOf(
             ScreenItem.Home,
-            ScreenItem.Events,
-            ScreenItem.Contacts,
+            ScreenItem.Materiais,
+            ScreenItem.Ocorrencias,
             ScreenItem.Perfil
 
         )
@@ -182,8 +182,8 @@ fun TelasScreen(
         ) { page ->
             val item = screens[page]
             when (item) {
-                ScreenItem.Contacts -> ContactsScreen()
-                ScreenItem.Events -> EventsScreen()
+                ScreenItem.Materiais -> MateriaisScreen()
+                ScreenItem.Ocorrencias -> OcorrenciasScreen()
                 ScreenItem.Home -> HomeScreen()
                 ScreenItem.Perfil -> ProfileScreen(onLogout = onLogout)
             }

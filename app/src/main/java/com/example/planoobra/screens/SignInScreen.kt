@@ -17,6 +17,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.planoobra.ui.theme.PlanoObraTheme
+import androidx.compose.ui.tooling.preview.Preview
 
 enum class AuthMode { SignIn, SignUp }
 
@@ -168,5 +170,21 @@ fun SignInScreen(
                 Text(text = bottomLink, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignInScreenPreview() {
+    PlanoObraTheme {
+        SignInScreen(mode = AuthMode.SignIn)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignUpScreenPreview() {
+    PlanoObraTheme {
+        SignInScreen(mode = AuthMode.SignUp)
     }
 }
