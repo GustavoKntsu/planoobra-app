@@ -40,6 +40,20 @@ object FirebaseRepository {
             descricao = "Adequação hidráulica, elétrica e acabamento fino de 8 consultórios médicos.",
             localizacao = "Rua das Palmeiras, 320 - Jardim América",
             status = "Pausada"
+        ),
+        Obra(
+            id = "1",
+            titulo = "Reforma da Cozinha",
+            descricao = "Troca de azulejos",
+            localizacao = "Setor Bueno",
+            status = "Em andamento"
+        ),
+        Obra(
+            id = "2",
+            titulo = "Construção do Muro",
+            descricao = "Muro de arrimo",
+            localizacao = "Jardim Goiás",
+            status = "Pausada"
         )
     )
     val erroCarregamento = mutableStateOf<String?>(null)

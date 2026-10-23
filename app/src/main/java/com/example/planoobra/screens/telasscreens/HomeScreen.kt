@@ -33,8 +33,8 @@ import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -55,7 +55,7 @@ import com.example.planoobra.models.Obra
 import com.example.planoobra.models.Tarefa
 // --- FIREBASE COMENTADO PARA MODO DEMONSTRAÇÃO ---
 // import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
+import java.util.UUID
 
 private val statusTarefa = listOf("A fazer", "Em andamento", "Concluída")
 
@@ -76,17 +76,30 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     var localizacaoObra by remember { mutableStateOf("") }
     var statusObra by remember { mutableStateOf("Em andamento") }
 
+    // ==========================================
+    // P1 (OFFLINE) - LISTAS LOCAIS COMPARTILHADAS ENTRE AS TELAS
+    // ==========================================
     val obras = FirebaseRepository.obras
     val tarefas = TarefaRepository.tarefas
     val usuarioAtual = AuthViewModel.currentUser ?: DemoUser()
-    // val usuarioAtual = FirebaseAuth.getInstance().currentUser
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
+    // ==========================================
+    // P2 (FIREBASE)
+    // ==========================================
+    /*
+    val obras = FirebaseRepository.obras
+    val tarefas = TarefaRepository.tarefas
+    val usuarioAtual = FirebaseAuth.getInstance().currentUser
     val erroCarregamentoObras by FirebaseRepository.erroCarregamento
 
     LaunchedEffect(erroCarregamentoObras) {
         erroCarregamentoObras?.let { snackbarHostState.showSnackbar(it) }
     }
+    */
+    // ==========================================
 
     val obrasVisiveis = obras.associateBy { it.id }
     val tarefasFiltradas = tarefas
@@ -208,7 +221,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                                         )
                                     }
                                     IconButton(
-                                        onClick = { FirebaseRepository.deleteObra(obra) }
+                                        // P1: Delete local
+                                        onClick = { obras.remove(obra) }
+                                        // P2: onClick = { FirebaseRepository.deleteObra(obra) }
                                     ) {
                                         Icon(
                                             Icons.Default.Delete,
@@ -316,17 +331,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                                     )
                                 }
                                 Text(
-                                    text = "Responsável: ${
-                                        if (
-                                            usuarioAtual != null &&
-                                            tarefa.responsavelId == usuarioAtual.uid
-                                        ) {
-                                            usuarioAtual.displayName ?: usuarioAtual.email
-                                                ?: tarefa.responsavelId
-                                        } else {
-                                            tarefa.responsavelId.ifBlank { "Não informado" }
-                                        }
-                                    }",
+                                    text = "Responsável: ${tarefa.responsavelId.ifBlank { "Não informado" }}",
                                     modifier = Modifier.padding(top = 4.dp),
                                     style = MaterialTheme.typography.bodySmall
                                 )
@@ -358,8 +363,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 tarefa = tarefaEmEdicao,
                 obras = obras,
-                currentUserId = usuarioAtual?.uid.orEmpty(),
-                currentUserLabel = usuarioAtual?.displayName ?: usuarioAtual?.email.orEmpty(),
+                currentUserId = usuarioAtual.uid.ifBlank { "id_fake" },
+                currentUserLabel = usuarioAtual.displayName.ifBlank { "usuário teste" },
                 isSaving = salvandoTarefa,
                 onDismissRequest = {
                     mostrarFormularioTarefa = false
@@ -367,7 +372,16 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     salvandoTarefa = false
                 },
                 onConfirmClick = { tarefa ->
-                    TarefaRepository.salvar(tarefa)
+                    // P1: Salvar Tarefa Local
+                    if (tarefaEmEdicao == null) {
+                        tarefas.add(tarefa.copy(id = tarefa.id.ifBlank { UUID.randomUUID().toString() }))
+                    } else {
+                        val idx = tarefas.indexOf(tarefaEmEdicao)
+                        if (idx != -1) tarefas[idx] = tarefa
+                    }
+
+                    // Para a P2: TarefaRepository.salvar(tarefa)
+
                     mostrarFormularioTarefa = false
                     tarefaEmEdicao = null
                 }
@@ -391,7 +405,36 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     obraEmEdicao = null
                 },
                 onConfirmClick = {
+                    // P1: Salvar Obra Local
                     val obraAtual = obraEmEdicao
+                    if (obraAtual == null) {
+                        obras.add(
+                            Obra(
+                                id = UUID.randomUUID().toString(),
+                                titulo = tituloObra,
+                                descricao = descricaoObra,
+                                localizacao = localizacaoObra,
+                                status = statusObra
+                            )
+                        )
+                    } else {
+                        val idx = obras.indexOf(obraAtual)
+                        if (idx != -1) {
+                            obras[idx] = obraAtual.copy(
+                                titulo = tituloObra,
+                                descricao = descricaoObra,
+                                localizacao = localizacaoObra,
+                                status = statusObra
+                            )
+                        }
+                    }
+                    mostrarFormularioObra = false
+                    obraEmEdicao = null
+
+                    // ==========================================
+                    // P2 (FIREBASE) - Código com firebase para a p2 comentado para usar depois
+                    // ==========================================
+                    /*
                     val aoConcluir: (String?) -> Unit = { erro ->
                         if (erro == null) {
                             mostrarFormularioObra = false
@@ -402,25 +445,16 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     }
                     if (obraAtual == null) {
                         FirebaseRepository.createObra(
-                            Obra(
-                                titulo = tituloObra,
-                                descricao = descricaoObra,
-                                localizacao = localizacaoObra,
-                                status = statusObra
-                            ),
+                            Obra(titulo = tituloObra, descricao = descricaoObra, localizacao = localizacaoObra, status = statusObra),
                             onComplete = aoConcluir
                         )
                     } else {
                         FirebaseRepository.editObra(
-                            obraAtual.copy(
-                                titulo = tituloObra,
-                                descricao = descricaoObra,
-                                localizacao = localizacaoObra,
-                                status = statusObra
-                            ),
+                            obraAtual.copy(titulo = tituloObra, descricao = descricaoObra, localizacao = localizacaoObra, status = statusObra),
                             onComplete = aoConcluir
                         )
                     }
+                    */
                 }
             )
         }
@@ -433,7 +467,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            TarefaRepository.excluir(tarefa)
+                            // P1: Excluir Tarefa Local
+                            tarefas.remove(tarefa)
+                            // P2: TarefaRepository.excluir(tarefa)
+
                             tarefaParaExcluir = null
                         }
                     ) {
